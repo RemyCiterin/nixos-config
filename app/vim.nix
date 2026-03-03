@@ -16,8 +16,8 @@
       packages.myVimPackage = with pkgs.vimPlugins; {
         # Loaded on launch.
         start = [
-          vim-lastplace
           vim-nix
+          vim-scala
           lean-nvim
           vim-nixhash
           vim-yaml
@@ -26,9 +26,12 @@
           ctrlp-vim
           vim-ocaml
           vim-devicons
+          vim-bsv
           rust-vim
+          typst-vim
+          idris2-vim
+          # verilog_systemverilog-vim
           zig-vim
-          vim-scriptease
           semshi
           haskell-vim
           coc-rust-analyzer
@@ -37,6 +40,11 @@
           coq_nvim
           #nvim-treesitter
           Coqtail
+          verilog_systemverilog-vim
+          telescope-nvim
+          tokyonight-nvim
+          semshi
+
           # vim-stylish-haskell
           # nvim-hs
           # coc-isabelle
@@ -49,9 +57,9 @@
       customRC = ''
           syntax on
         " This has to be defined at the top of the file
-          let maplocalleader = "\<Space>\<Space>"
-          let mapleader = "\<Space>"
-
+          " let maplocalleader = "\<Space>\<Space>"
+          let mapleader = ";"
+          let maplocalleader = ","
 
           set scrolloff=4
 
@@ -62,17 +70,23 @@
         " spell
         " signcolumn=yes
 
+        au BufRead,BufNewFile *.bs set filetype=haskell
+
         " Search case sensitivity
           set smartcase
           set ignorecase
 
         " Keep lines short
-          " set textwidth=80
-          " set colorcolumn=80
-          " hi ColorColumn ctermbg=DarkYellow
+          set textwidth=100
+          set colorcolumn=100
+          hi ColorColumn ctermbg=DarkYellow
 
         " No error bells
           set noerrorbells
+
+          colorscheme tokyonight-night
+          " colorscheme vim
+          " set notermguicolors
 
         " Flex
           nnoremap <C-s> gg0<C-v>G$y<C-v>G$r Go<esc>0"_Dp$pgg$p
@@ -135,7 +149,7 @@
           set expandtab
 
         " Auto indent
-          set smartindent
+          " set smartindent
           set autoindent
 
         " Ctrl-T for new tab
@@ -150,6 +164,12 @@
 
         " Line and word count
           map <F3> :!wc <C-R>%<CR>
+
+        " Find files using Telescope command-line sugar.
+          nnoremap <leader>ff <cmd>Telescope find_files<cr>
+          nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+          nnoremap <leader>fb <cmd>Telescope buffers<cr>
+          nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
         " Lean
         "  lua<<EOF
